@@ -4,8 +4,7 @@ const consoleInfo = require("../../utils/consoleInfo")
 const connectionString = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_URL}/?retryWrites=true&w=majority`;
 
 const conectar = () =>
-  mongoose
-    .connect(connectionString)
+  mongoose.connect(connectionString)
     .then(() => {
       consoleInfo.infoDB("Mongo DB connected")
     })
@@ -14,10 +13,9 @@ const conectar = () =>
     });
 
 const desconectar = () =>
-  mongoose
-    .disconnect()
+  mongoose.disconnect()
     .then(() => {
-      console.log("MONGO DESCONECTADO");
+      consoleInfo.infoDB("Mongo DB disconnected");
     })
     .catch((err) => {
       console.error(err);
