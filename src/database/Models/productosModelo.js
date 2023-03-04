@@ -12,8 +12,7 @@ const getAllProducts = () => {
 };
 
 const getOneProduct = (nombre) => {
-  const producto = Producto.find({ nombre: nombre })
-    .exec()
+  const producto = Producto.findOne({ nombre: nombre })
     .then((result) => result)
     .catch((err) => {
       console.error(err);

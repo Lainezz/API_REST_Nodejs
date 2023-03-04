@@ -19,9 +19,15 @@ const productosService = require("../services/productosService");
  * @param {Function} next - Llamada al siguiente middleware
  */
 const getAllProducts = async (req, res, next) => {
-  const allProducts = await productosService.getAllProducts();
-  
-  res.send(allProducts).end();
+
+  productosService.getAllProducts()
+    .then((result) => {
+      if (result) res.send(result).end();
+      else res.status(404).send({ mensaje: "productos Not Found" }).end();
+    })
+    .catch((err) =>
+      res.status(500).send({ mensaje: "Fallo inesperado" }).end()
+    );
 };
 
 /**
@@ -33,10 +39,17 @@ const getAllProducts = async (req, res, next) => {
  * @param {Object} res - Obj response dado por express
  * @param {Function} next - Llamada al siguiente middleware
  */
-const getOneProduct = async (req, res, next) => {
+const getOneProduct = (req, res, next) => {
   let nombreProducto = req.params.prod;
-  const producto = await productosService.getOneProduct(nombreProducto);
-  res.send(producto).end();
+
+  productosService.getOneProduct(nombreProducto)
+    .then((result) => {
+      if(result) res.send(result).end()
+      else res.status(404).send({mensaje: "producto Not Found"}).end()
+    })
+    .catch((err) =>
+      res.status(500).send({ mensaje: "Fallo inesperado" }).end()
+    );
 };
 
 /**
@@ -62,19 +75,19 @@ const postOneProduct = (req, res, next) => {
   if (!body.nombre || !body.precio) {
     res.status(400).send({ mensaje: "Datos Incompletos" }).end();
   } else {
-    
     const rawProduct = {
       nombre: body.nombre,
       precio: body.precio,
     };
 
-    const createdProduct = productosService.createOneProduct(rawProduct);
-
-    if (createdProduct) {
-      res.send(createdProduct).end();
-    } else {
-      res.status(409).send({ mensaje: "Entrada duplicada" }).end();
-    }
+    productosService.createOneProduct(rawProduct)
+      .then((result) => {
+        if (result) res.send(result).end();
+        else res.status(409).send({ mensaje: "Entrada duplicada" }).end();
+      })
+      .catch((err) =>
+        res.status(500).send({ mensaje: "Fallo inesperado" }).end()
+      );
   }
 };
 
@@ -105,16 +118,17 @@ const putOneProduct = (req, res, next) => {
  * @param {Object} res - Obj response dado por express
  * @param {Function} next - Llamada al siguiente middleware
  */
-const deleteOneProduct = async (req, res, next) => {
-  let { prod } = req.params;
+const deleteOneProduct = (req, res, next) => {
+  let { prod: nombreProd } = req.params;
 
-  const deletedProduct = await productosService.deleteOneProduct(prod);
-
-  if (!deletedProduct) {
-    res.status(400).send({ mensaje: "Producto no eliminado" }).end();
-  } else {
-    res.send(deletedProduct).end();
-  }
+  productosService.deleteOneProduct(nombreProd)
+    .then((result) => {
+      if (result) res.send(result).end();
+      else res.status(400).send({ mensaje: "Producto no eliminado" }).end();
+    })
+    .catch((err) =>
+      res.status(500).send({ mensaje: "Fallo inesperado" }).end()
+    );
 };
 
 module.exports = {
