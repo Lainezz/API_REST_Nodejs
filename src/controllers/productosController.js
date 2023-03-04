@@ -40,9 +40,9 @@ const getAllProducts = async (req, res, next) => {
  * @param {Function} next - Llamada al siguiente middleware
  */
 const getOneProduct = (req, res, next) => {
-  let nombreProducto = req.params.prod;
+  const {prod: nombreProd} = req.params;
 
-  productosService.getOneProduct(nombreProducto)
+  productosService.getOneProduct(nombreProd)
     .then((result) => {
       if(result) res.send(result).end()
       else res.status(404).send({mensaje: "producto Not Found"}).end()
@@ -75,6 +75,7 @@ const postOneProduct = (req, res, next) => {
   if (!body.nombre || !body.precio) {
     res.status(400).send({ mensaje: "Datos Incompletos" }).end();
   } else {
+    
     const rawProduct = {
       nombre: body.nombre,
       precio: body.precio,
@@ -93,9 +94,7 @@ const postOneProduct = (req, res, next) => {
 
 /**
  * Función middleware para actualizar 1 producto
- *
- * @todo - falta implementacion
- *
+ * *
  * HTTP method: PUT
  * @link https://expressjs.com/en/4x/api.html
  * @param {Object} req - El objeto request dado por express
@@ -103,8 +102,23 @@ const postOneProduct = (req, res, next) => {
  * @param {Function} next - Llamada al siguiente middleware
  */
 const putOneProduct = (req, res, next) => {
-  let nombreProducto = req.params.prod;
-  res.send(`<h1>PUT ${nombreProducto}</h1>`).end();
+  
+  const {prod: nombreProd} = req.params;
+  const {body: rawProduct} = req
+
+  if(!nombreProd || (!rawProduct.nombre && !rawProduct.precio)) {
+    res.status(404).send({ mensaje: "Datos incompletos" }).end();
+    return
+  }
+  
+  productosService.updateOneProduct(nombreProd, rawProduct)
+     .then((result) => {
+       if (result) res.send(result).end();
+       else res.status(400).send({ mensaje: "Producto no actualizado" }).end();
+     })
+     .catch((err) =>
+       res.status(500).send({ mensaje: "Fallo inesperado" }).end()
+     );
 };
 
 /**
@@ -119,7 +133,7 @@ const putOneProduct = (req, res, next) => {
  * @param {Function} next - Llamada al siguiente middleware
  */
 const deleteOneProduct = (req, res, next) => {
-  let { prod: nombreProd } = req.params;
+  const { prod: nombreProd } = req.params;
 
   productosService.deleteOneProduct(nombreProd)
     .then((result) => {

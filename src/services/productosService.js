@@ -14,13 +14,13 @@ const Producto = require("../database/Schemas/Producto");
 
 
 const getAllProducts = () => {
-  const allProductos = productosModelo.getAllProducts();
-  return allProductos;
+  const allProducts = productosModelo.getAllProducts();
+  return allProducts;
 };
 
-const getOneProduct = (nombre) => {
-  const producto = productosModelo.getOneProduct(nombre);
-  return producto;
+const getOneProduct = (nombreProd) => {
+  const productBD = productosModelo.getOneProduct(nombreProd);
+  return productBD;
 };
 
 const createOneProduct = async (rawProduct) => {
@@ -35,24 +35,41 @@ const createOneProduct = async (rawProduct) => {
     updatedAt: today,
   });
   
-  const producto = await getOneProduct(newProduct.nombre);
+  const productBD = await productosModelo.getOneProduct(newProduct.nombre);
 
-  if(!producto)
+  if(!productBD)
     return productosModelo.createOneProduct(newProduct);
   else
     return undefined
 };
 
-const deleteOneProduct = async (nombre) => {
+const updateOneProduct = async (nombreProd, rawProduct) => {
+  
+  const now = new Date().toISOString();
+  const productBD = await productosModelo.getOneProduct(nombreProd);
+
+  if(!productBD) return undefined
+
+  productBD.nombre = rawProduct.nombre
+  productBD.precio = rawProduct.precio
+  productBD.createdAt = productBD.createdAt
+  productBD.updatedAt = now
+
+  productosModelo.updateOneProduct(productBD);
+  return productBD;
+
+}
+
+const deleteOneProduct = async (nombreProd) => {
   
   //Busco el producto a eliminar
-  const producto = await getOneProduct(nombre);
+  const productBD = await productosModelo.getOneProduct(nombreProd);
   
-  if (producto){
+  if (productBD){
     //Elimino el producto
-    productosModelo.deleteOneProduct(nombre)
-    return producto
-    
+    productosModelo.deleteOneProduct(nombreProd)
+    return productBD
+
   } else return undefined;
   
 };
@@ -61,5 +78,6 @@ module.exports = {
   getAllProducts,
   getOneProduct,
   createOneProduct,
+  updateOneProduct,
   deleteOneProduct
 };

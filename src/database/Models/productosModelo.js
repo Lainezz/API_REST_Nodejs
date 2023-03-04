@@ -1,29 +1,29 @@
 const Producto = require("../Schemas/Producto");
 
 const getAllProducts = () => {
-  const productos = Producto.find()
+  const allProducts = Producto.find()
     .exec()
     .then((result) => result)
     .catch((err) => {
       console.error(err);
       return false;
     });
-  return productos;
+  return allProducts;
 };
 
-const getOneProduct = (nombre) => {
-  const producto = Producto.findOne({ nombre: nombre })
+const getOneProduct = (nombreProd) => {
+  const productBD = Producto.findOne({ nombre: nombreProd })
     .then((result) => result)
     .catch((err) => {
       console.error(err);
       return false;
     });
 
-  return producto;
+  return productBD;
 };
 
-const deleteOneProduct = (nombre) => {
-  const producto = Producto.deleteOne({ nombre: nombre })
+const deleteOneProduct = (nombreProd) => {
+  const productBD = Producto.deleteOne({ nombre: nombreProd })
     .exec()
     .then((result) => result)
     .catch((err) => {
@@ -31,26 +31,40 @@ const deleteOneProduct = (nombre) => {
       return false;
     });
 
-  return producto;
+  return productBD;
 };
 
 const createOneProduct = (newProduct) => {
   
-  const producto = newProduct;
+  const auxProduct = newProduct;
   
-  producto.save()
+  auxProduct.save()
     .then((result) => result)
     .catch((err) => {
       console.error(err);
       return false;
     });
 
-  return producto;
+  return auxProduct;
 };
+
+const updateOneProduct = (updatedProduct) => {
+  const auxProduct = updatedProduct
+
+  auxProduct.save()
+    .then((result) => result)
+    .catch((err) => {
+      console.error(err);
+      return false;
+    });
+  
+  return auxProduct
+}
 
 module.exports = {
   getAllProducts,
   getOneProduct,
   createOneProduct,
   deleteOneProduct,
+  updateOneProduct
 };
