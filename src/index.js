@@ -1,3 +1,12 @@
+/**
+ * 
+ * API Rest sencilla para control de inventario
+ * Incluye gestión de usuarios por Session
+ * 
+ * @author @Lainezz
+ * @version 1.0
+ */
+
 require("dotenv").config()
 const express = require("express");
 const cookieParser = require("cookie-parser");
