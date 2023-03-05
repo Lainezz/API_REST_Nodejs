@@ -42,12 +42,12 @@ For starting the app
 
 #### Dependencies
 
-"cookie-parser": "1.4.6",
-"cors": "2.8.5",
-"dotenv": "16.0.3",
-"express": "4.18.2",
-"mongoose": "7.0.0",
-"uuid": "9.0.0"
+"cookie-parser": "1.4.6",  
+"cors": "2.8.5",  
+"dotenv": "16.0.3",  
+"express": "4.18.2",  
+"mongoose": "7.0.0",  
+"uuid": "9.0.0"  
 
 #### Dev Dependencies
 "nodemon": "2.0.20"
