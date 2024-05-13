@@ -53,7 +53,7 @@ https://stackoverflow.blog/2020/03/02/best-practices-for-rest-api-design/
 VIDEO YT
 https://www.youtube.com/watch?v=qFmwRriNJWs&t=5s
 
-SESSION VS COOKIE
+SESSION VS TOKEN
 https://stackoverflow.com/questions/47515991/how-to-setup-an-authentication-middleware-in-express-js
 https://www.youtube.com/watch?v=o14rCK37RAY
 https://www.youtube.com/watch?v=bywKD040J_o
