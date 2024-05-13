@@ -31,7 +31,6 @@ app.use(utils.infoBeginOfRequest);
 DB.conectar();
 app.use("/api/v1", auth.authenticateUser, v1);
 
-
 //FUNCION Genérica de gestión de errores
 app.use((err, req, res, next) => {
   console.error("ERROR:" + err.stack);
