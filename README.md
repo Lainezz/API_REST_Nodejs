@@ -260,14 +260,14 @@ Sample data for testing can be found in the repository. You can use tools like P
 
 ## 📄 License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [MIT License](https://opensource.org/license/mit).
 
 ---
 
 ## 👨‍💻 Author
 
-- **Name**: Diego Linares Mojácar
-- **Email**: diegolinaresmojacar@gmail.com
+- **Name**: Diego Linares Ortiz
+- **Email**: <diegolinaresmojacar@gmail.com>
 
 ---
 
