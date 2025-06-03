@@ -1,54 +1,274 @@
-# API REST Nodejs
+
+# 📦 API_REST_Nodejs
+
+A RESTful API built with Node.js and Express.js for managing an inventory system. This project supports full CRUD operations for products and includes basic session-based user authentication. Designed primarily for educational purposes, it serves as a foundational example for building REST APIs with MongoDB.
+
 ---
+
+## 🚀 Features
+
+- **Product Management**: Create, read, update, and delete products.
+- **User Authentication**: Session-based login system.
+- **MongoDB Integration**: Data persistence using MongoDB with Mongoose ODM.
+- **CORS Enabled**: Cross-Origin Resource Sharing configured for broader accessibility.
+- **Environment Configuration**: Manage environment variables using `dotenv`.
+
+---
+
+## 🛠️ Technologies Used
+
+- **Node.js**: JavaScript runtime environment.
+- **Express.js**: Web framework for Node.js.
+- **MongoDB**: NoSQL database for data storage.
+- **Mongoose**: ODM for MongoDB and Node.js.
+- **UUID**: For generating unique identifiers.
+- **Cookie-Parser**: Parse Cookie header and populate `req.cookies`.
+- **CORS**: Enable Cross-Origin Resource Sharing.
+- **Dotenv**: Load environment variables from a `.env` file.
+- **Nodemon**: Monitor for changes and automatically restart the server during development.
+
+---
+
+## 📂 Project Structure
 
 ```
-{
-  "name": "Diego",
-  "email": "diegolinaresmojacar@gmail.com",
-  "age": undefined
-}
-``` 
-
-## Description
-
-API Rest implemented on NodeJS for a inventory control app.
-
-It includes CRUD methods for "productos" resource. Also, it includes an user authentication by Session.
-
-This is implemented only for academic purposes. The implementation of the API should be improved and there are a lot of things that could have be done differently.
-
----
-
-## DB
-
-Implemented for a MongoDB database. It uses mongoose as an intermediary between the API and the DB.
+API_REST_Nodejs/
+├── src/
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   ├── middlewares/
+│   └── app.js
+├── .env
+├── .gitignore
+├── package.json
+├── package-lock.json
+└── README.md
+```
 
 ---
 
-#### Sample Data
-Some examples can be found on this [page](/Requests/requests.rest)
+## 📦 Installation
+
+1. **Clone the repository**:
+
+   ```bash
+   git clone https://github.com/Lainezz/API_REST_Nodejs.git
+   cd API_REST_Nodejs
+   ```
+
+2. **Install dependencies**:
+
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**:
+
+   Create a `.env` file in the root directory and add the following:
+
+   ```env
+   PORT=3000
+   MONGODB_URI=your_mongodb_connection_string
+   SESSION_SECRET=your_session_secret
+   ```
+
+4. **Start the server**:
+
+   - For development with automatic restarts:
+
+     ```bash
+     npm run dev
+     ```
+
+   - For production:
+
+     ```bash
+     npm start
+     ```
 
 ---
 
-#### Scripts
+## 📚 API Endpoints
 
-For building the app
-`npm start`
+### 🔐 Authentication
 
-For starting the app
-`npm run dev`
+- **Login**
+
+  - **URL**: `/login`
+  - **Method**: `POST`
+  - **Body Parameters**:
+
+    ```json
+    {
+      "username": "your_username",
+      "password": "your_password"
+    }
+    ```
+
+  - **Success Response**:
+
+    - **Code**: `200 OK`
+    - **Content**:
+
+      ```json
+      {
+        "message": "Login successful"
+      }
+      ```
+
+- **Logout**
+
+  - **URL**: `/logout`
+  - **Method**: `POST`
+  - **Success Response**:
+
+    - **Code**: `200 OK`
+    - **Content**:
+
+      ```json
+      {
+        "message": "Logout successful"
+      }
+      ```
+
+### 📦 Products
+
+- **Get All Products**
+
+  - **URL**: `/productos`
+  - **Method**: `GET`
+  - **Success Response**:
+
+    - **Code**: `200 OK`
+    - **Content**:
+
+      ```json
+      [
+        {
+          "_id": "product_id",
+          "name": "Product Name",
+          "price": 100,
+          "quantity": 10
+        },
+        ...
+      ]
+      ```
+
+- **Get Product by ID**
+
+  - **URL**: `/productos/:id`
+  - **Method**: `GET`
+  - **Success Response**:
+
+    - **Code**: `200 OK`
+    - **Content**:
+
+      ```json
+      {
+        "_id": "product_id",
+        "name": "Product Name",
+        "price": 100,
+        "quantity": 10
+      }
+      ```
+
+- **Create New Product**
+
+  - **URL**: `/productos`
+  - **Method**: `POST`
+  - **Body Parameters**:
+
+    ```json
+    {
+      "name": "New Product",
+      "price": 100,
+      "quantity": 10
+    }
+    ```
+
+  - **Success Response**:
+
+    - **Code**: `201 Created`
+    - **Content**:
+
+      ```json
+      {
+        "message": "Product created successfully",
+        "product": {
+          "_id": "new_product_id",
+          "name": "New Product",
+          "price": 100,
+          "quantity": 10
+        }
+      }
+      ```
+
+- **Update Product**
+
+  - **URL**: `/productos/:id`
+  - **Method**: `PUT`
+  - **Body Parameters**:
+
+    ```json
+    {
+      "name": "Updated Product",
+      "price": 150,
+      "quantity": 5
+    }
+    ```
+
+  - **Success Response**:
+
+    - **Code**: `200 OK`
+    - **Content**:
+
+      ```json
+      {
+        "message": "Product updated successfully",
+        "product": {
+          "_id": "product_id",
+          "name": "Updated Product",
+          "price": 150,
+          "quantity": 5
+        }
+      }
+      ```
+
+- **Delete Product**
+
+  - **URL**: `/productos/:id`
+  - **Method**: `DELETE`
+  - **Success Response**:
+
+    - **Code**: `200 OK`
+    - **Content**:
+
+      ```json
+      {
+        "message": "Product deleted successfully"
+      }
+      ```
 
 ---
 
-#### Dependencies
+## 🧪 Sample Data
 
-"cookie-parser": "1.4.6",  
-"cors": "2.8.5",  
-"dotenv": "16.0.3",  
-"express": "4.18.2",  
-"mongoose": "7.0.0",  
-"uuid": "9.0.0"  
+Sample data for testing can be found in the repository. You can use tools like Postman or Insomnia to interact with the API endpoints.
 
-#### Dev Dependencies
-"nodemon": "2.0.20"
+---
 
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+## 👨‍💻 Author
+
+- **Name**: Diego Linares Mojácar
+- **Email**: diegolinaresmojacar@gmail.com
+
+---
+
+Feel free to contribute to this project by submitting issues or pull requests. Happy coding!
